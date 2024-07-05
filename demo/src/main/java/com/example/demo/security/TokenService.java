@@ -1,11 +1,12 @@
-package com.example.demo.security;
+package org.example.trabalhofinal.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.example.demo.dto.User;
+import org.example.trabalhofinal.model.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,8 +22,8 @@ public class TokenService {
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                    .withIssuer("floricultura")
-                    .withSubject(user.getLogin())
+                    .withIssuer("faculdade")
+                    .withSubject(user.getUsername())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;
@@ -35,7 +36,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("floricultura")
+                    .withIssuer("faculdade")
                     .build()
                     .verify(token)
                     .getSubject();
