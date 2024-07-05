@@ -1,7 +1,6 @@
-package com.example.demo.service;
+package org.example.trabalhofinal.service;
 
-
-import com.floricultura.repository.UserRepository;
+import org.example.trabalhofinal.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +14,6 @@ public class AuthorizationService implements UserDetailsService {
     UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByLogin(username);
+        return (UserDetails) userRepository.findByUsername(username);
     }
 }
