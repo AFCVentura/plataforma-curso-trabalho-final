@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/signin.css">
+    <title>Meus Cursos</title>
+</head>
+
+<body>
+    <div class="fundo">
+        <header>
+            <div class="logo">Logo</div>
+        </header>
+        <main>
+            <h1>Meus Cursos</h1>
+            <div class="curso-container" id="coursosContainer">
+                <div class="curso1">
+                    <div class="card-curso-topo">
+                        <div class="menu-icone">...</div>
+                    </div>
+                    <div class="card-curso-corpo"></div>
+                    <div class="card-curso-baixo">
+                        <p>Curso 1</p>
+                    </div>
+                </div>
+                <div class="curso2">
+                    <div class="card-curso-topo">
+                        <div class="menu-icone">...</div>
+                    </div>
+                    <div class="card-curso-corpo"></div>
+                    <div class="card-curso-baixo">
+                        <p>Curso 2</p>
+                    </div>
+                </div>
+                <div class="add-ajustes" onclick="addCurso()">
+                    <div class="add-icone">+</div>
+                    <p>Adicionar</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="ModelodeCurso" class="modelo">
+        <div class="modelo-conteudo">
+            <span class="fechar" onclick="closeModal()">&times;</span>
+            <h2 id="tituloModelo">Adicionar Curso</h2>
+            <label for="nomeCurso">Nome do Curso</label>
+            <input type="text" id="nomeCurso" name="nomeCurso" required>
+            <button onclick="saveCourse()">Salvar</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
