@@ -1,45 +1,62 @@
 package com.example.demo.controller;
 
-import com.example.demo.*;
+import com.example.demo.command.comentario.ComentarioCommandFactory;
 import com.example.demo.model.Comentario;
-import com.example.demo.repository.ComentarioRepository;
+import com.example.demo.command.comentario.ComentarioCommand;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/comentario")
 public class ComentarioController {
-
     @Autowired
-    public ComentarioRepository repository;
+    ComentarioCommandFactory comentarioCommandFactory;
+
+    @PostMapping
+    public Comentario createComentario(@RequestBody Comentario comentario) {
+        return
+                (Comentario)comentarioCommandFactory
+                        .create(ComentarioCommand.POST,comentario)
+                        .execute();
+    }
 
     @GetMapping("/todos")
     public List<Comentario> getAllComentarios() {
-        return repository.findAll();
+        return
+                (List<Comentario>)comentarioCommandFactory
+                        .create(ComentarioCommand.GETALL)
+                        .execute();
     }
 
     @GetMapping("/{id}")
     public Comentario getComentarioById(@PathVariable Long id) {
-        Optional<Comentario> opcao = repository.findById(id);
-        return opcao.isPresent() ? opcao.get() : null;
+        return
+                (Comentario)comentarioCommandFactory
+                        .create(ComentarioCommand.GETBYID, id)
+                        .execute();
     }
 
-    @DeleteMapping
-    public void deleteComentario(@PathVariable Long id) {
-        repository.deleteById(id);
+    @PutMapping("/{id}")
+    public Comentario updateComentario(@PathVariable Long id, @RequestBody Comentario comentario) {
+        return
+                (Comentario) comentarioCommandFactory
+                        .create(ComentarioCommand.PUT, id, comentario)
+                        .execute();
     }
 
-    @PostMapping
-    public Comentario createComentario(@RequestBody Comentario comentario) {
-        return repository.save(comentario);
+    @DeleteMapping("/{id}")
+    public Comentario deleteComentario(@PathVariable Long id) {
+        return
+                (Comentario)comentarioCommandFactory
+                        .create(ComentarioCommand.DELETE, id)
+                        .execute();
     }
 
-    @PutMapping
-    public Comentario updateComentario(@RequestBody Comentario comentario) {
-        return repository.save(comentario);
-    }
+
+
+
 }

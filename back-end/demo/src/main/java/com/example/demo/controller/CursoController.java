@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.*;
+
+import com.example.demo.command.curso.CursoCommand;
+import com.example.demo.command.curso.CursoCommandFactory;
 import com.example.demo.model.Curso;
-import com.example.demo.repository.CursoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,38 +16,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/curso")
 public class CursoController {
-
     @Autowired
-    public CursoRepository repository;
+    CursoCommandFactory cursoCommandFactory;
+
+    @PostMapping
+    public Curso createCurso(@RequestBody Curso curso) {
+        return
+                (Curso)cursoCommandFactory
+                        .create(CursoCommand.POST, curso)
+                        .execute();
+    }
 
     @GetMapping("/todos")
     public List<Curso> getAllCursos() {
-        return repository.findAll();
+        return
+                (List<Curso>)cursoCommandFactory
+                        .create(CursoCommand.GETALL)
+                        .execute();
     }
 
     @GetMapping("/{id}")
     public Curso getCursoById(@PathVariable Long id) {
-        Optional<Curso> opcao = repository.findById(id);
-        return opcao.isPresent() ? opcao.get() : null;
-    }
-
-    @DeleteMapping
-    public void deleteCurso(@PathVariable Long id) {
-        repository.deleteById(id);
-    }
-
-    @PostMapping
-    public Curso createCurso(@RequestBody Curso curso) {
-        return repository.save(curso);
+        return
+                (Curso)cursoCommandFactory
+                        .create(CursoCommand.GETBYID)
+                        .execute();
     }
 
     @PutMapping
-    public Curso updateCurso(@RequestBody Curso curso) {
-        return repository.save(curso);
+    public Curso updateCurso(@PathVariable Long id, @RequestBody Curso curso) {
+        return
+                (Curso)cursoCommandFactory
+                        .create(CursoCommand.PUT, id, curso)
+                        .execute();
+
     }
+
+    @DeleteMapping
+    public Curso deleteCurso(@PathVariable Long id) {
+        return
+                (Curso) cursoCommandFactory
+                        .create(CursoCommand.DELETE, id)
+                        .execute();
+    }
+
+
+
+
 }

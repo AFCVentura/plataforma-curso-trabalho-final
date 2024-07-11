@@ -19,13 +19,13 @@ public class Forum {
 
     private String assunto;
 
-    @OneToMany(mappedBy = "forum", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference(value = "forum-comentarios")
+    @OneToMany(mappedBy = "forum", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "comentario-forum")
     private List<Comentario> comentarios;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
-    @JsonBackReference
+    @JsonBackReference(value = "curso-forum")
     private Curso curso;
 
     public Forum(String nome, String assunto, String descricao, Curso curso) {
@@ -68,5 +68,21 @@ public class Forum {
 
     public void setAssunto(String assunto) {
         this.assunto = assunto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 }

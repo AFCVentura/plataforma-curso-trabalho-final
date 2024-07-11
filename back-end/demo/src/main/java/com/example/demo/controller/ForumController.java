@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.*;
+import com.example.demo.command.forum.ForumCommand;
+import com.example.demo.command.forum.ForumCommandFactory;
 import com.example.demo.model.Forum;
 import com.example.demo.repository.ForumRepository;
 
@@ -14,32 +16,49 @@ import java.util.Optional;
 @RequestMapping("/forum")
 public class ForumController {
 
-    @Autowired
-    public ForumRepository repository;
+    ForumCommandFactory forumCommandFactory;
+
+
+    @PostMapping
+    public Forum createForum(@RequestBody Forum forum) {
+        return
+                (Forum)forumCommandFactory
+                        .create(ForumCommand.POST, forum)
+                        .execute();
+    }
 
     @GetMapping("/todos")
     public List<Forum> getAllForum() {
-        return repository.findAll();
+        return
+                (List<Forum>)forumCommandFactory
+                        .create(ForumCommand.GETALL)
+                        .execute();
     }
 
     @GetMapping("/{id}")
     public Forum getForumById(@PathVariable Long id) {
-        Optional<Forum> opcao = repository.findById(id);
-        return opcao.isPresent() ? opcao.get() : null;
-    }
-
-    @DeleteMapping
-    public void deleteForum(@PathVariable Long id) {
-        repository.deleteById(id);
-    }
-
-    @PostMapping
-    public Forum createForum(@RequestBody Forum forum) {
-        return repository.save(forum);
+       return
+               (Forum)forumCommandFactory
+                       .create(ForumCommand.GETBYID, id)
+                       .execute();
     }
 
     @PutMapping
-    public Forum updateForum(@RequestBody Forum forum) {
-        return repository.save(forum);
+    public Forum updateForum(@PathVariable Long id, @RequestBody Forum forum) {
+        return
+                (Forum)forumCommandFactory
+                        .create(ForumCommand.PUT, id, forum)
+                        .execute();
     }
+
+    @DeleteMapping
+    public Forum deleteForum(@PathVariable Long id) {
+        return
+                (Forum)forumCommandFactory
+                        .create(ForumCommand.DELETE, id)
+                        .execute();
+    }
+
+
+
 }

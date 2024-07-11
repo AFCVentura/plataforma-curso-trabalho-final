@@ -20,12 +20,12 @@ public class Comentario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forum_id")
-    @JsonBackReference
+    @JsonBackReference(value = "comentario-forum")
     private Forum forum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    @JsonBackReference
+    @JsonBackReference(value = "comentario-user")
     private User usuario;
 
     public Comentario(String titulo, String texto, String timestamp, Forum forum, User usuario) {
