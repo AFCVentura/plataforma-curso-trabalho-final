@@ -14,7 +14,7 @@ public class Teste {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
-    @JsonBackReference
+    @JsonBackReference(value = "curso-teste")
     private Curso curso;
 
     public Teste(String descricao, Curso curso) {
@@ -23,6 +23,14 @@ public class Teste {
     }
 
     public Teste() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescricao() {

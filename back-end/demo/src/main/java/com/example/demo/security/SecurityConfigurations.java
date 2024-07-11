@@ -28,8 +28,8 @@ public class SecurityConfigurations {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/adubo", "/planta", "/pedido", "/cliente").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/adubo/{id}", "/planta/{id}", "/pedido/{id}", "/cliente/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/forum", "/curso", "/comentario", "/teste", "/user", "/videoaula").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/forum/{id}", "/curso/{id}", "/comentario/{id}", "/teste/{id}", "/user/{id}", "/videoaula/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

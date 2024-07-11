@@ -20,16 +20,19 @@ public class Curso {
     private String tema;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "curso-videoaula")
     private List<Videoaula> videoaulas;
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "curso-forum")
     private List<Forum> forum;
 
     @ManyToMany(mappedBy = "cursos")
-    @JsonManagedReference
     private List<User> users;
+
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference(value="curso-teste")
+    private List<Teste> testes;
 
     public Curso() {
     }
@@ -74,5 +77,29 @@ public class Curso {
 
     public void setForum(List<Forum> forum) {
         this.forum = forum;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Teste> getTestes() {
+        return testes;
+    }
+
+    public void setTestes(List<Teste> testes) {
+        this.testes = testes;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import com.example.demo.model.dto.UserRole;
 
@@ -40,6 +42,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
     private List<Curso> cursos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference(value = "comentario-user")
+    private List<Comentario> comentarios;
 
     public User(String login, String encryptedPassword, UserRole role) {
         this.username = login;

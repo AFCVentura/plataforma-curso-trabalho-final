@@ -14,7 +14,7 @@ public class Videoaula {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_id")
-    @JsonBackReference
+    @JsonBackReference(value = "curso-videoaula")
     private Curso curso;
 
     public Videoaula(String url, Curso curso) {
